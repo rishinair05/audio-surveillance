@@ -76,6 +76,9 @@ def transcribe_directory(directory):
             all_texts += transcribe_audio_chunks(file_path) + " "
     return all_texts
 
+directory_path = "test_audios"
+print("\nFull transcribed text from all files:", transcribe_directory(directory_path))
+
 #Opens and reads file
 def load_text_file(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
@@ -110,6 +113,11 @@ def process_text_files(input_folder, output_folder):
 
             print(f"Processed and stored: {output_file}")
 
+input_folder = 'audio_texts'
+output_folder = 'audio_vectors'
+
+process_text_files(input_folder, output_folder)
+
 #Unpickle the pickle files
 def load_sbert_vector(file_path):
     with open(file_path, 'rb') as file:
@@ -137,38 +145,33 @@ def create_faiss_index(vectors):
 def get_sbert_vectors_for_keywords(keywords, model):
     return model.encode(keywords)
 
-# Main function to orchestrate the process
-def analyze_audio_folder_for_flagged_content(audio_folder, sbert_model_name='all-mpnet-base-v2', keywords=["terrorism", "bombing", "suicide", "kill", "murder"], threshold=5):
-    # Step 1: Transcribe all audio files in the given directory
-    transcribe_directory(audio_folder)
+#Load SBERT model
+model = SentenceTransformer('all-mpnet-base-v2')
 
-    # Step 2: Process text files to convert them into SBERT vectors
-    input_folder = 'audio_texts'
-    output_folder = 'audio_vectors'
-    process_text_files(input_folder, output_folder)
+#Keywords
+keywords = ["terrorism", "bombing", "suicide", "kill", "murder"]
 
-    # Step 3: Load SBERT vectors and create a FAISS index
-    model = SentenceTransformer(sbert_model_name)
-    folder_path = 'audio_vectors'
-    audio_vectors, filenames = load_sbert_vectors_from_folder(folder_path)
-    faiss_index = create_faiss_index(audio_vectors)
+#Convert keywords to SBERT vectors
+keyword_vectors = get_sbert_vectors_for_keywords(keywords, model)
 
-    # Step 4: Convert keywords to SBERT vectors and perform similarity search
-    keyword_vectors = get_sbert_vectors_for_keywords(keywords, model)
-    flagged_files = set()
+#Load all SBERT vectors from the folder
+folder_path = 'audio_vectors'
+audio_vectors, filenames = load_sbert_vectors_from_folder(folder_path)
 
-    for keyword_vector in keyword_vectors:
-        keyword_vector = np.array(keyword_vector, dtype=np.float32).reshape(1, -1)
-        distances, indices = faiss_index.search(keyword_vector, 1)
-        for i in range(len(indices)):
-            if distances[i][0] < threshold:
-                flagged_files.add(filenames[indices[i][0]])
+#Create FAISS index
+faiss_index = create_faiss_index(audio_vectors)
 
-    # Step 5: Output flagged files
-    flagged_audio_files = [file[:-4] + ".wav" for file in flagged_files]
-    return flagged_audio_files
+#FAISS similarity search
 
-# Example usage
-audio_folder = "test_audios"
-flagged_files = analyze_audio_folder_for_flagged_content(audio_folder)
-print("Flagged Files:", flagged_files)
+flagged_files = set()
+
+for keyword_vector in keyword_vectors:
+    keyword_vector = np.array(keyword_vector, dtype=np.float32).reshape(1, -1)
+    distances, indices = faiss_index.search(keyword_vector, 1)
+    for i in range(len(indices)):
+        if distances[i][0] < 5:
+            flagged_files.add(filenames[indices[i][0]])
+
+for file in flagged_files:
+    modified_file_name = file[:-4] + ".wav"
+    print(f"Flagged File: {modified_file_name}")
