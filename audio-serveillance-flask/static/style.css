@@ -1,8 +1,10 @@
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    color: #333;
 }
 
 .container {
@@ -14,37 +16,48 @@ body {
 header {
     background: #333;
     color: #fff;
-    padding: 20px;
-    text-align: center;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #bbb 1px solid;
 }
 
-.upload-section {
-    background: #f9f9f9;
-    padding: 20px;
-    text-align: center;
+header h1 {
+    padding: 5px 0;
 }
 
-.upload-section form {
-    margin: 20px 0;
-}
-
-.results-section {
+.upload-section, .results-section {
     background: #fff;
     padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+}
+
+.upload-section input[type="file"] {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 95%;
+}
+
+.upload-section input[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.upload-section input[type="submit"]:hover {
+    background-color: #555;
 }
 
 .results-section h2 {
     color: #333;
 }
 
-#resultsList {
-    list-style: none;
-    padding: 0;
-}
-
-#resultsList li {
-    background: #e3e3e3;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 5px;
+.results-section p {
+    font-size: 1em;
+    line-height: 1.6;
 }

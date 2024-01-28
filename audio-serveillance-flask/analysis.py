@@ -26,7 +26,7 @@ def transcribe_audio(path):
             return f"Error from Google Speech Recognition service: {e}"
     return text
 
-# Split large audio file into several chunks when it detects gaps of silence and then transcribe
+#Split large audio file into several chunks when it detects gaps of silence and then transcribe
 def transcribe_audio_chunks(path):
     sound = AudioSegment.from_file(path)  
     #Split into chunks based on some variables (500ms of silence and 14 decibel threshold)
@@ -137,29 +137,29 @@ def create_faiss_index(vectors):
 def get_sbert_vectors_for_keywords(keywords, model):
     return model.encode(keywords)
 
-# Main function to orchestrate the process
+#Main function to orchestrate the process
 def analyze_audio(folder):
     r = sr.Recognizer()
 
-    # Define keywords and threshold
+    #Define keywords and threshold
     keywords = ["terrorism", "bombing", "suicide", "kill", "murder"]
     threshold = 5
     sbert_model_name = 'all-mpnet-base-v2'
 
-    # Step 1: Transcribe all audio files in the given directory
+    #Transcribe all audio files in the given directory
     transcribed_text = transcribe_directory(folder)
 
-    # Step 2: Process text files to convert them into SBERT vectors
+    #Process text files to convert them into SBERT vectors
     input_folder = 'audio_texts'
     output_folder = 'audio_vectors'
     process_text_files(input_folder, output_folder)
 
-    # Step 3: Load SBERT vectors and create a FAISS index
+    #Load SBERT vectors and create a FAISS index
     model = SentenceTransformer(sbert_model_name)
     audio_vectors, filenames = load_sbert_vectors_from_folder(output_folder)
     faiss_index = create_faiss_index(audio_vectors)
 
-    # Step 4: Convert keywords to SBERT vectors and perform similarity search
+    #Convert keywords to SBERT vectors and perform similarity search
     keyword_vectors = get_sbert_vectors_for_keywords(keywords, model)
     flagged_files = set()
 
@@ -170,5 +170,5 @@ def analyze_audio(folder):
             if distances[i][0] < threshold:
                 flagged_files.add(filenames[indices[i][0]].replace('.pkl', '.wav'))
 
-    # Step 5: Return flagged files as a string
+    #Return flagged files as a string
     return ", ".join(flagged_files)

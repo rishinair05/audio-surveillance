@@ -1,2 +1,2 @@
 # audio-surveillance
-An audio surveillance tool to flag malevolent activities.
+An audio surveillance tool to flag maleficent activities.
