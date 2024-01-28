@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Analysis Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Audio File Analysis</h1>
+            <p>Upload audio files to check for harmful content.</p>
+        </header>
+
+        <section class="upload-section">
+            <form id="uploadForm" method="post" action="/upload" enctype="multipart/form-data">
+                <input type="file" name="files" webkitdirectory mozdirectory msdirectory odirectory directory />
+                <input type="submit" value="Upload" />
+            </form>
+        </section>
+
+        <section class="results-section">
+            <h2>Analysis Result</h2>
+            <!-- Results will be displayed here -->
+            {% if result %}
+                <p>{{ result }}</p>
+            {% else %}
+                <p>No results to display</p>
+            {% endif %}
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

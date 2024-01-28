@@ -172,8 +172,3 @@ def analyze_audio(folder):
 
     # Step 5: Return flagged files as a string
     return ", ".join(flagged_files)
-
-# Example usage
-audio_folder = "test_audios"
-flagged_files = analyze_audio(audio_folder)
-print("Flagged Files:", flagged_files)
