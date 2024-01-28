@@ -12,4 +12,4 @@ In order to run the application, make sure that your current working directory i
 I tested my application with a sample of 5 audio files totalling a minute of content (it takes around a minute to run). Files 1, 3, 5 contain normal conversation while files 2 and 4 contains threats and dialogue related to terrorism. My application correctly flags the malevolent audios.
 
 Example of the GUI and the application working:
-<img src="Audio-Serveillance-GUI.PNG" alt="GUI of Audio-Serveillance" class="center" width=50%>
+<img src="Audio-Serveillance-GUI.PNG" alt="GUI of Audio-Serveillance" class="center" width=70%>
