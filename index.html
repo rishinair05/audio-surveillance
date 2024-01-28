@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Analysis Tool</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Audio File Analysis</h1>
+            <p>Upload audio files to check for harmful content.</p>
+        </header>
+
+        <section class="upload-section">
+            <form id="uploadForm">
+                <input type="file" id="audioFiles" name="files[]" accept=".wav" multiple>
+                <button type="submit">Analyze Files</button>
+            </form>
+        </section>
+
+        <section class="results-section">
+            <h2>Flagged Files</h2>
+            <ul id="resultsList"></ul>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

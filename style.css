@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.upload-section {
+    background: #f9f9f9;
+    padding: 20px;
+    text-align: center;
+}
+
+.upload-section form {
+    margin: 20px 0;
+}
+
+.results-section {
+    background: #fff;
+    padding: 20px;
+}
+
+.results-section h2 {
+    color: #333;
+}
+
+#resultsList {
+    list-style: none;
+    padding: 0;
+}
+
+#resultsList li {
+    background: #e3e3e3;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
